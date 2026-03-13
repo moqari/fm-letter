@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>03.22</title>
+<title>radio letter</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Serif+Text:ital@0;1&display=swap');
 
@@ -271,81 +271,42 @@
 
 <div id="letter-wrap">
   <div class="paper">
-    <div class="paper-date">This is for you</div>
+    <!-- change this date to whatever u want -->
+    <div class="paper-date">your date here</div>
     <div class="letter-text" id="letter-text"></div>
-    <a id="playlist-btn" href="https://open.spotify.com/playlist/5MfLwC48ND8vw9QYWbbEXk?si=b2222a72b2ec41c9" target="_blank">
+    <!-- paste your playlist link in the href below -->
+    <a id="playlist-btn" href="https://open.spotify.com/playlist/yourplaylistidhere" target="_blank">
       our playlist
     </a>
   </div>
 </div>
 
-<audio id="song" src="No_One_Noticed__Extended_Spanish_.mp3" preload="auto"></audio> 
-
+<!-- put your mp3 file in the same folder and change the src to match the filename -->
+<audio id="song" src="your_song.mp3" preload="auto"></audio>
+<!-- swap the src with a base64 string if you want it fully self contained -->
 <script>
-const letter = `Dear Leigh,
+// paste your letter here, keep the backticks
+const letter = `Dear [name],
 
-I don't know if you'll ever read this. In truth, I'm writing it knowing that I probably wont send it. Its been almost a year since we broke up.. there are things I've been carrying inside of me.. that I want to put into words.
+Write your letter here..
 
-First, I want to thank you.
+— [your name]`;
 
-Thank you for the memories we shared, for the patience you had with me, and for the way you loved me so openly, for always being there for me. Looking back, I realized how genuine you were with your feelings. You gave your heart honestly, and that's definitely something I'll always respect about you.
+// change this to whatever frequency you want as the secret
+// the number shown on the dial goes from 87.5 to 101.5
+// pick something meaningful to you, like a date: 90.3 for march 9, 95.5 for may 5, etc.
+const TARGET = 95.5;
 
-When I ended our relationship, ill tell you this.. it wasn't because you did something wrong okay?. It was because I believed I wasnt fully in love, and I didnt want to stay and hurt you by pretending. at that time, I thought I was doing the right thing by being honest. but over time, I've realized that my feelings were more complicated than I understood back then.
+// how precise they need to be — 0.05 means they have to land almost exactly on it
+// make it bigger like 0.3 if u want it easier to find
+const EXACT = 0.05;
 
-After everything ended, I tried to move forward normally. But months later, I started noticing how often you still appeared in my thoughts.. you were always in my mind, you were just.. there, always present Even when i wasnt thinking consciously about you. When I looked through my recent and old drawings and, the characters, the details, the personalities, the spark of inspiration that i didnt even realize that were connected to you. thats where it really hit me and i realized you had been part of my world in the ways that i never fully understood.
-
-You were in the things i created,
-in the memories I kept, in the small things that reminded me of the time we shared.
-it feels like your woven into me.
-
-It made me start reflecting on everything more deeply.. like really.
-
-I started to understand that the way I experience love and it really isnt always straightforward. I care deeply about people, but sometimes my feelings are quiet and hard for me to recognize in the moment. lookking back.. I realize that what I felt for you was never nothing. It was a mix.. of care, admiration, attachment, and something that I really didn't fully understand at the time and something deeper that i only started to understand after time passed.
-
-And I want to say something honestly.
-
-I do love you.
-
-It isnt in a way where i want to hold you down. it isnt in a way that tries possess you or pull you away from your happiness and your life now.
-
-I love you simply in a way that i want you to be happy! even if that happiness is in somewhere that doesnt include me :)!
-
-This is the kind of love i have for you, I dont demand anything from you at all, i dont wanna try and control the future xD and it honestly just exists as genuine love and care for your well being. You still matter to me Leigh, alot.. like alot.. your safety, your happiness and the life that you have been building all matter to me more than you realize.
-
-I've also spent a lot of time reflecting on my own mistakes. There were moments when I teased you too much, or when I didnt even show appreciation in the way you deserved. There were even times I spoke about my frustrations to friends instead of communicating better with you. for those things, I'm genuinely sorry.
-
-You deserved kindness and clarity, understanding from me.
-
-Even now, I still think about how you're doing sometimes. Its not because i want to interfere with your life and ur happiness, but because I still care about your well being. And when I see you moving forward in your life, i honestly hope you're happy and being treated well. You deserve someone who gives you the same loyalty and warmth that you give to others.
-
-There's something else that I want to say honestly.
-
-If life had taken a different path, if life had given me the opportunity.. and if I had understood my own feelings more clearly back then, I would have even tried to love you better. I would have given you the kind of care and attention that you deserved from the beginning.
-
-But life doesn't move backwards. I know that.
-
-You have your own life now, your own path, your own growth. And I respect that completely.
-
-That's one of the reasons I'm writing this letter knowing I won't send it.
-
-I know that youve grown, and your life is moving forward now. I respect that completely. I don't want to reopen wounds or complicate your life and your happiness.. More than anything. I want you to have the happiness and peace that you deserve and I DO not ever want to break that. I'm letting these feelings go slowly
-
-Even if we never return to the closeness we once had, I'm really grateful for the time we shared. You were an important part of my life and you were an important person, and you helped me understand myself more than you probably realize.
-
-And even if this letter stays unread, I'm glad these words exist somewhere. I really put alot of time and my best writing this XDD
-
-I'll always wish you well, Leigh.
-
-Wherever life takes you, I hope you are safe, supported, and surrounded by people who appreciate the kind of person you are.
-
-Thank you for being part of my life.
-
-— Zamantha`;
+// how long to wait before the letter appears (in milliseconds)
+// change this to match when ur song gets past its intro
+// 3000 = 3 seconds, 5000 = 5 seconds, etc.
+const LETTER_DELAY = 3000;
 
 const MIN = 87.5, MAX = 101.5;
-const TARGET = 90.72; // 03.22 on the dial
-const EXACT = 0.05;   // no snapping — has to be really close
-
 const track = document.getElementById('tuner-track');
 const thumb = document.getElementById('tuner-thumb');
 const fill  = document.getElementById('tuner-fill');
@@ -355,14 +316,11 @@ const song   = document.getElementById('song');
 
 let dragging = false, locked = false;
 
-// static noise via Web Audio API
 let actx = null, staticNode = null, staticGain = null;
 
 function startStatic() {
   if (actx) return;
   actx = new (window.AudioContext || window.webkitAudioContext)();
-
-  // white noise buffer
   const bufSize = actx.sampleRate * 2;
   const buf = actx.createBuffer(1, bufSize, actx.sampleRate);
   const data = buf.getChannelData(0);
@@ -372,7 +330,6 @@ function startStatic() {
   staticNode.buffer = buf;
   staticNode.loop = true;
 
-  // bandpass filter makes it crackly not just hissy
   const filter = actx.createBiquadFilter();
   filter.type = 'bandpass';
   filter.frequency.value = 1200;
@@ -402,12 +359,11 @@ function setFreq(f) {
   thumb.style.left = pct + '%';
   fill.style.width  = pct + '%';
 
-  startStatic(); // kick off static on first interaction
+  startStatic();
 
   const near = Math.abs(f - TARGET) < EXACT;
-  freqEl.textContent = near ? '03.22' : f.toFixed(1);
+  freqEl.textContent = near ? TARGET.toFixed(1) : f.toFixed(1);
 
-  // crackle volume goes quieter the closer you are to the signal
   if (staticGain && !locked) {
     const dist = Math.min(Math.abs(f - TARGET) / 3, 1);
     staticGain.gain.setTargetAtTime(0.15 * dist + 0.02, actx.currentTime, 0.05);
@@ -454,20 +410,15 @@ document.addEventListener('touchend', () => dragging = false);
 
 function startReveal() {
   document.getElementById('radio').classList.add('fade-out');
-
   song.volume = 0;
   song.play().catch(() => {});
-
-  // fade song in
   let v = 0;
   const up = setInterval(() => {
     v = Math.min(1, v + 0.04);
     song.volume = v;
     if (v >= 1) clearInterval(up);
   }, 80);
-
-  // wait for "maybe i.." to pass (0:03) then show letter
-  setTimeout(showLetter, 3000);
+  setTimeout(showLetter, LETTER_DELAY);
 }
 
 function showLetter() {
@@ -480,7 +431,6 @@ function typeLetter() {
   const cursor = document.createElement('span');
   cursor.className = 'cursor';
   el.appendChild(cursor);
-
   let i = 0;
   function type() {
     if (i < letter.length) {
@@ -489,9 +439,7 @@ function typeLetter() {
       setTimeout(type, 28);
     } else {
       cursor.remove();
-      setTimeout(() => {
-        document.getElementById('playlist-btn').classList.add('visible');
-      }, 600);
+      setTimeout(() => document.getElementById('playlist-btn').classList.add('visible'), 600);
     }
   }
   type();
